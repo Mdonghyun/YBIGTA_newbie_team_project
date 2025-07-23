@@ -17,7 +17,7 @@ class KakaoCrawler(BaseCrawler):
         super().__init__(output_dir)
         # 명동교자 본점 카카오맵 리뷰 URL
         self.base_url = 'https://place.map.kakao.com/10332413#comment'
-        self.values = []
+        self.values : list[list] = []
         self.columns = ['date', 'star', 'review']
 
     def start_browser(self):
