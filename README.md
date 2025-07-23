@@ -14,8 +14,20 @@ YBIGTA TEAM 7
 
 김우진: 인공지능학과 24학번 김우진입니다.
 
-# web 실행 방법
 
-# Crawling 실행 방법
+# About project
 
-# EDA/FE 실행 방법
+
+
+
+ ### 코드 실행 방법
+
+#### web 실행 방법
+
+#### Crawling 실행 방법
+review_analysis/crawling 폴더까지 이동합니다.
+
+Ubuntu 터미널에서 python main.py -o ../../database --all 를 입력합니다.
+
+
+#### EDA/FE 실행 방법
