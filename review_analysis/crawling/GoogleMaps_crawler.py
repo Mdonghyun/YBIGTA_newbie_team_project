@@ -28,7 +28,7 @@ class GoogleMapsCrawler(BaseCrawler):
         super().__init__(output_dir)
         self.logger = logging.getLogger()
         self.driver = None
-        self.reviews = []
+        self.reviews : list[list] = []
         self.timeout = timeout
 
     def start_browser(self):
