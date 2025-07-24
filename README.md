@@ -25,9 +25,9 @@ YBIGTA TEAM 7
 
 #### web 실행 방법
 
-requirements 설치 후 프로젝트 루트에서 uviorn app.main:app --reload 명렁어를 실행하고,
+requirements 설치 후 프로젝트 루트에서 uvicorn app.main:app --reload 명렁어를 실행하고,
 
-http://127.0.0.1.8000 URL로 접속합니다.
+http://127.0.0.1:8000/static/index.html URL로 접속합니다.
 
 
 
