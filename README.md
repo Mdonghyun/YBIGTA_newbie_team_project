@@ -42,9 +42,11 @@ python main.py -o ../../database --all 로 실행합니다.
 
 #### EDA/FE 실행 방법
 
+주의: konlpy 를 사용하기 위해 컴퓨터에 JAVA가 설치되어 있어야 합니다!
+
 YBIGTA_newbie_team_project/review_analysis/preprocessing 까지 이동 후 ,
 
-python3 main.py -o "../../database" -a 로 실행합니다.
+python3 main.py -o "../../database" -a 로 실행합니다. 
 
 ### project result
 
@@ -122,12 +124,24 @@ Diningcode
 전처리(공통): 날짜, 리뷰, 별점  중 하나라도 가지지 못한 데이터들은 모두 제거하였습니다. 또한, 별점 범위(1~5)를 벗어나는 이상치들을 제거하였습니다.  
 텍스트 처리를 어렵게 만드는 특수 문자를 제거하기 위해, 한글과 숫자를 제외한 문자들에 대하여 필터링을 진행하였습니다.
 
-
-
 kakaomap, Diningcode: 요일, 월, 주말 여부를 추가하였습니다.
 
 googlemap: 구글 맵의 날짜 데이터는 상대 시간(3달 전) 으로 표기되므로, 우선 이 상대 시간으로 부터 절대 시간을 추측하였습니다.
 추측한 절대 시간을 바탕으로, 월과 년을 추측하는 FE를 진행하였습니다. 요일과 주말 여부는 너무 부정확성이 큰 관계로 추가하지 않았습니다.
+
+
+<텍스트 벡터화>
+
+리뷰들의 토픽들을 알아보기 위해, 텍스트를 BOW 방식으로 벡터화한 다음 LDA를 진행하였습니다.
+
+결과는 다음과 같습니다.
+
+[LDA-다이닝코드 시각화 보러가기](review_analysis/plots/lda_visualization_dining.html)  
+[LDA-구글맵 시각화 보러가기](review_analysis/plots/lda_visualization_google.html)  
+[LDA-카카오맵 시각화 보러가기](review_analysis/plots/lda_visualization_kakao.html)
+
+대체적으로 칼국수, 명동, 만두, 김치 등 음식에 관한 topic이 많음을 확인 할 수 있습니다. 그러나, 벌레 등 부정어 또한 존재하는 것을 확인 할 수 있습니다.
+
 
 
 
