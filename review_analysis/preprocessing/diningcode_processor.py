@@ -1,4 +1,9 @@
 from review_analysis.preprocessing.base_processor import BaseDataProcessor
+from konlpy.tag import Okt
+from gensim import corpora, models
+import pyLDAvis.gensim_models as gensimvis
+import pyLDAvis
+
 import pandas as pd
 import numpy as np
 import os
@@ -37,7 +42,7 @@ class DiningProcessor(BaseDataProcessor):
 
         pass
     
-    def feature_engineering(self):
+    def feature_engineering(self,num_topics=5, num_words=10):
 
         """
         파생 변수 생성 
@@ -51,6 +56,11 @@ class DiningProcessor(BaseDataProcessor):
         is_weekend: 토요일, 일요일 여부
 
         month: 1~12월, 정수
+
+        텍스트 분석:
+        - 명사 기반 토큰 추출 (Okt)
+        - BoW 벡터화 및 Gensim 기반 LDA 토픽 모델링
+        - pyLDAvis를 이용한 시각화 결과 plots/에 저장
 
         """
 
@@ -68,6 +78,32 @@ class DiningProcessor(BaseDataProcessor):
         self.df['is_weekend'] = self.df['dow'].isin([5, 6])  #5,6: 토,일
 
         self.df['month'] = self.df['date'].dt.month  
+
+        print("[INFO] 텍스트 토큰화 및 LDA 분석 중...")
+        okt = Okt()
+        self.df['tokens'] = self.df['text'].apply(lambda x: [w for w in okt.nouns(x) if len(w) > 1])
+
+        dictionary = corpora.Dictionary(self.df['tokens'])
+        corpus = [dictionary.doc2bow(text) for text in self.df['tokens']]
+        lda_model = models.LdaModel(corpus=corpus,
+                                    id2word=dictionary,
+                                    num_topics=num_topics,
+                                    random_state=42,
+                                    passes=10)
+
+        print("[INFO] 주요 토픽:")
+        for idx, topic in lda_model.print_topics(num_topics=num_topics, num_words=num_words):
+            print(f"Topic {idx + 1}: {topic}")
+
+        print("[INFO] pyLDAvis 시각화 생성 중...")
+        vis = gensimvis.prepare(lda_model, corpus, dictionary)
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        plot_dir = os.path.join(base_dir, 'plots')
+        os.makedirs(plot_dir, exist_ok=True)
+
+        vis_path = os.path.join(plot_dir, "lda_visualization_dining.html")
+        pyLDAvis.save_html(vis, vis_path)
+        print(f"[INFO] LDA 시각화가 {vis_path} 에 저장되었습니다.")
 
 
     def save_to_database(self):

@@ -1,10 +1,13 @@
 from review_analysis.preprocessing.base_processor import BaseDataProcessor
 from dateutil.relativedelta import relativedelta
+from konlpy.tag import Okt
+from gensim import corpora, models
+import pyLDAvis.gensim_models as gensimvis
+import pyLDAvis
 
 import pandas as pd
 import numpy as np
 import os
-
 
 class GoogleProcessor(BaseDataProcessor):
     def __init__(self, input_path: str, output_path: str):
@@ -37,7 +40,7 @@ class GoogleProcessor(BaseDataProcessor):
         self.df=self.df.loc[mask_review].copy()
         self.df['content']=self.df['content'].str.replace(r'[^0-9A-Za-z가-힣\s\.\,\!\?]', '', regex=True)
     
-    def feature_engineering(self):
+    def feature_engineering(self,num_topics=5, num_words=10):
         """
         파생 변수 생성:
         - 상대 날짜(date) → 절대 날짜 추정 (date_est)
@@ -45,6 +48,12 @@ class GoogleProcessor(BaseDataProcessor):
         - 추정 요일 dow (0=월, ..., 6=일)
         - dow_name: 요일 한글명
         - is_weekend: 토/일 여부
+
+        텍스트 분석:
+        - 명사 기반 토큰 추출 (Okt)
+        - BoW 벡터화 및 Gensim 기반 LDA 토픽 모델링
+        - pyLDAvis를 이용한 시각화 결과 plots/에 저장
+
         """
 
         if 'date' not in self.df.columns:
@@ -79,6 +88,32 @@ class GoogleProcessor(BaseDataProcessor):
 
         # 다시 self.df에 저장
         self.df = df
+
+        print("[INFO] LDA 분석을 위한 토큰화 중...")
+        okt = Okt()
+        self.df['tokens'] = self.df['content'].apply(lambda x: [w for w in okt.nouns(x) if len(w) > 1])
+
+        dictionary = corpora.Dictionary(self.df['tokens'])
+        corpus = [dictionary.doc2bow(text) for text in self.df['tokens']]
+        lda_model = models.LdaModel(corpus=corpus,
+                                    id2word=dictionary,
+                                    num_topics=num_topics,
+                                    random_state=42,
+                                    passes=10)
+
+        print("[INFO] 주요 토픽:")
+        for idx, topic in lda_model.print_topics(num_topics=num_topics, num_words=num_words):
+            print(f"Topic {idx + 1}: {topic}")
+
+        print("[INFO] pyLDAvis 시각화 생성 중...")
+        vis = gensimvis.prepare(lda_model, corpus, dictionary)
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        plot_dir = os.path.join(base_dir, 'plots')
+        os.makedirs(plot_dir, exist_ok=True)
+
+        vis_path = os.path.join(plot_dir, "lda_visualization_google.html")
+        pyLDAvis.save_html(vis, vis_path)
+        print(f"[INFO] LDA 시각화가 {vis_path} 에 저장되었습니다.")
 
 
 
