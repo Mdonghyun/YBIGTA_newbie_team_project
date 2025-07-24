@@ -163,15 +163,19 @@ def _parse_one_review(li) -> Dict[str, str]:
             score = ""
 
     # 날짜
-    date_el = li.select_one("span.date")
     date = ""
+    date_el = li.select_one("p.point-detail span.date")
     if date_el:
         raw = date_el.get_text(strip=True)
-        m = re.search(r"(\d{1,2})월\s*(\d{1,2})일", raw)
-        if m:
-            mm, dd = int(m.group(1)), int(m.group(2))
-            date = f"{YEAR_FALLBACK}-{mm:02d}-{dd:02d}"
-
+        m_full = re.search(r"(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일", raw)
+        if m_full:
+            y, mm, dd = map(int, m_full.groups())
+            date = f"{y:04d}-{mm:02d}-{dd:02d}"
+        else:
+            m_md = re.search(r"(\d{1,2})월\s*(\d{1,2})일", raw)
+            if m_md:
+                mm, dd = map(int, m_md.groups())
+                date = f"{YEAR_FALLBACK}-{mm:02d}-{dd:02d}"
 
     return {"date": date, "score": score, "text": text}
 
