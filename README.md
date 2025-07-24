@@ -133,6 +133,69 @@ googlemap: 구글 맵의 날짜 데이터는 상대 시간(3달 전) 으로 표�
 
 #### 비교분석
 
+##### 1. Negative Reviews Topics  
+![Negative Topic Distribution by Site](<review_analysis/plots/Negative Topic Distribution by Site.png>)
+
+<details>
+<summary>▶ Show full keyword lists</summary>
+
+**Topic 1:** 맛이, 많이, 맛도, 김치, 먹고, 외국인, 국물이, 김치는, 않고, 없고  
+**Topic 2:** 칼국수, 만두는, 만두, 음식, 사람이, 없음, 없고, 엄청, 김치는, 김치  
+**Topic 3:** 맛은, 다른, 칼국수는, 다시, 불친절, 사람, 먹는, 김치는, 엄청, 없고  
+
+</details>
+
+- **Topic 1 (맛 불만)**  
+  “맛이”, “국물이”, “김치” 등 **국물·김치 맛**에 대한 불만
+- **Topic 2 (메뉴·혼잡 불만)**  
+  “칼국수”, “만두”, “사람” 키워드로 보는 **붐빔·대기/메뉴 구성** 불만
+- **Topic 3 (서비스 불만)**  
+  “불친절”, “다시” 등 **서비스 태도**와 **재방문 의향 부족**
+
+---
+
+##### 2. Positive Reviews Topics 
+![Positive Topic Distribution by Site](<review_analysis/plots/Positive Topic Distribution by Site.png>)
+
+<details>
+<summary>▶ Show full keyword lists</summary>
+
+**Topic 1:** 맛은, 사람이, 칼국수와, 항상, 그래도, 조금, 유명한, 맛있어요, 맛집, 엄청  
+**Topic 2:** 칼국수, 만두, 김치가, 맛있어요, 진한, 맛이, 마늘, 김치, 칼국수는, 생각나는  
+**Topic 3:** 만두는, 칼국수, 국물이, 맛있음, 금방, 칼국수는, 칼국수가, 웨이팅, 맛있습니다, 많이  
+
+</details>
+
+- **Topic 1 (재방문·추천)**  
+  “맛집”, “항상”, “추천” 등 **재방문 의향**과 **추천** 멘트
+- **Topic 2 (국물·김치 칭찬)**  
+  “국물이 진한”, “마늘김치” 등 **국물·김치 맛**에 대한 호평
+- **Topic 3 (만두·웨이팅 칭찬)**  
+  “만두”, “금방”, “웨이팅” 등 **만두 맛**과 **빠른 입장** 칭찬
+
+---
+
+##### 3. Key Insights & Action Items
+
+- **KakaoMap**  
+  - 부정: 국물·김치 맛 불만(59%)  
+  - 긍정: 재방문·추천 의향(45%)  
+  - **Action**: 국물 레시피 개선, 김치 매운맛 조절
+
+- **GoogleMap**  
+  - 부정: 맛 불만(58%) & 붐빔·대기 불만(23%)  
+  - 긍정: 국물·김치(35%) 및 만두·웨이팅(32%) 칭찬  
+  - **Action**: 좌석 확충, 대기 시스템 개선
+
+- **DiningCode**  
+  - 부정: 메뉴·혼잡 불만(42%)  
+  - 긍정: 국물·김치 칭찬(39%)  
+  - **Action**: 붐빔 알림 도입, 서비스 매뉴얼 보강
+
+---
+
+
+
 
 
 
