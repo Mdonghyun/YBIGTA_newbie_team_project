@@ -52,7 +52,9 @@ python3 main.py -o "../../database" -a 로 실행합니다.
 
 #### Github 
 
-깃허브 사진들 올리기 
+![branch_protection](github/branch_protection.png)
+![push_rejected](github/push_rejected.png)
+![review_and_merged](github/review_and_merged.png)
 
 #### Crawling
 
