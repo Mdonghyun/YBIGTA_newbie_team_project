@@ -136,9 +136,19 @@ googlemap: 구글 맵의 날짜 데이터는 상대 시간(3달 전) 으로 표�
 
 결과는 다음과 같습니다.
 
-[LDA-다이닝코드 시각화 보러가기](review_analysis/plots/lda_visualization_dining.html)  
-[LDA-구글맵 시각화 보러가기](review_analysis/plots/lda_visualization_google.html)  
-[LDA-카카오맵 시각화 보러가기](review_analysis/plots/lda_visualization_kakao.html)
+Diningcode
+
+![LDA-다이닝코드 시각화 보러가기](review_analysis/plots/diningcodelda.png)  
+
+Googlemap
+
+
+![LDA-구글맵 시각화 보러가기](review_analysis/plots/googlelda.png)  
+
+KaKaomap
+
+
+![LDA-카카오맵 시각화 보러가기](review_analysis/plots/kakaolda.png)
 
 대체적으로 칼국수, 명동, 만두, 김치 등 음식에 관한 topic이 많음을 확인 할 수 있습니다. 그러나, 벌레 등 부정어 또한 존재하는 것을 확인 할 수 있습니다.
 
