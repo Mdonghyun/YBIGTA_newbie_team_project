@@ -1,19 +1,61 @@
 annotated-types==0.7.0
 anyio==4.8.0
+attrs @ file:///croot/attrs_1734533101012/work
+beautifulsoup4 @ file:///croot/beautifulsoup4-split_1752598980051/work
+brotlicffi @ file:///croot/brotlicffi_1736182461069/work
+certifi @ file:///croot/certifi_1752653701669/work/certifi
+cffi @ file:///croot/cffi_1736182485317/work
+charset-normalizer==3.4.2
 click==8.1.8
 colorama==0.4.6
 dnspython==2.7.0
 email_validator==2.2.0
 exceptiongroup==1.2.2
 fastapi==0.115.6
-h11==0.14.0
+funcy==2.0
+gensim==4.3.3
+h11 @ file:///croot/h11_1748442006460/work
 idna==3.10
+Jinja2==3.1.6
+joblib==1.5.1
+jpype1==1.6.0
+konlpy==0.6.0
+lxml==6.0.0
+MarkupSafe==3.0.2
 mypy==1.14.1
 mypy-extensions==1.0.0
+numexpr==2.11.0
+numpy==1.26.4
+outcome @ file:///croot/outcome_1741014030079/work
+packaging==25.0
+pandas==2.3.1
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
 pydantic==2.10.5
 pydantic_core==2.27.2
+pyLDAvis==3.4.1
+PySocks @ file:///work/ci_py311/pysocks_1676822712504/work
+python-dateutil==2.9.0.post0
+python-dotenv==1.1.1
+pytz==2025.2
+requests==2.32.4
+scikit-learn==1.7.1
+scipy==1.13.1
+selenium @ file:///croot/selenium_1727169276076/work
+six==1.17.0
+smart_open==7.3.0.post1
 sniffio==1.3.1
+sortedcontainers @ file:///tmp/build/80754af9/sortedcontainers_1623949099177/work
+soupsieve @ file:///croot/soupsieve_1696347547217/work
 starlette==0.41.3
+threadpoolctl==3.6.0
 tomli==2.2.1
-typing_extensions==4.12.2
+trio @ file:///croot/trio_1747182466986/work
+trio-websocket @ file:///croot/trio-websocket_1741025724688/work
+typing_extensions @ file:///croot/typing_extensions_1734714854207/work
+tzdata==2025.2
+urllib3 @ file:///croot/urllib3_1750775463400/work
 uvicorn==0.34.0
+webdriver-manager==4.0.2
+websocket-client @ file:///croot/websocket-client_1715878298792/work
+wrapt==1.17.2
+wsproto @ file:///croot/wsproto_1725051532745/work
