@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-user = os.getenv("DB_USER")
-passwd = os.getenv("DB_PASSWORD")
-host = os.getenv("DB_HOST")
-port = os.getenv("DB_PORT")
-db = os.getenv("DB_NAME")
+user = os.getenv("DB_USER", "root")
+passwd = os.getenv("DB_PASSWORD", "password")
+host = os.getenv("DB_HOST", "localhost")
+port = os.getenv("DB_PORT", "3306")
+db = os.getenv("DB_NAME", "test_db")
 
 DB_URL = f'mysql+pymysql://{user}:{passwd}@{host}:{port}/{db}?charset=utf8'
 
