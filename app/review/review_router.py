@@ -1,8 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
 from fastapi import APIRouter, HTTPException
 from database.mongodb_connection import mongo_db
 from app.responses.base_response import BaseResponse
 import pandas as pd
-import os
 from datetime import datetime
 from typing import List, Dict, Any
 
