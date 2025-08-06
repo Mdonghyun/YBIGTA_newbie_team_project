@@ -220,6 +220,25 @@ KaKaomap
 
 ---
 
+## Docker Hub
+
+- [mokdh/ybigta-fastapi](https://hub.docker.com/r/mokdh/ybigta-fastapi)
+
+---
+
+![register](aws/register.png)
+
+![login](aws/login.png)
+
+![delete](aws/delete.png)
+
+![update-password](aws/update-password.png)
+
+![upload](aws/upload.png)
+
+![preprocess](aws/preprocess.png)
+
+![gitjub_action](aws/github_action.png)
 
 
 
