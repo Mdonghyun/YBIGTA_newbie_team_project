@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-user = os.getenv("DB_USER", "root")
-passwd = os.getenv("DB_PASSWORD", "password")
-host = os.getenv("DB_HOST", "localhost")
-port = os.getenv("DB_PORT", "3306")
-db = os.getenv("DB_NAME", "test_db")
+user = os.getenv("MYSQL_USER", "root")
+passwd = os.getenv("MYSQL_PASSWORD", "password")
+host = os.getenv("MYSQL_HOST", "localhost")
+port = os.getenv("MYSQL_PORT", "3306")
+db = os.getenv("MYSQL_DATABASE", "ybigta_project")
 
 DB_URL = f'mysql+pymysql://{user}:{passwd}@{host}:{port}/{db}?charset=utf8'
 
