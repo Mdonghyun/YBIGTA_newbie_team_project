@@ -1,5 +1,8 @@
 {
-  "note": "샘플 메타 파일. 실제 배포에서는 미리 구축된 인덱스를 업로드하세요.",
-  "version": 1
+  "note": "명동교자 본점 리뷰 기반 인덱스 (자동 생성)",
+  "version": 1,
+  "embedding_model": "solar-embedding-1-large-passage/query",
+  "created_at": "$(date +%F)",
+  "source_dir": "database/",
+  "generated_by": "st_app/rag/embedder.py"
 }
-

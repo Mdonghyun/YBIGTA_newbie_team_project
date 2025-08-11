@@ -15,32 +15,49 @@ from langchain.docstore.document import Document
 from langchain_community.docstore import InMemoryDocstore
 import faiss # faiss-cpu 라이브러리 직접 사용
 
+class UpstageEmbeddingsMinimal:
+    def __init__(self, api_key: str, base_url: str = "https://api.upstage.ai/v1",
+                 model_query: str = "solar-embedding-1-large-query"):
+        self.api_key = api_key
+        self.base_url = base_url.rstrip("/")
+        self.model_query = model_query
+
+    def __call__(self, text: str):
+        return self.embed_query(text)
+
+    def embed_query(self, text: str):
+        import requests
+        resp = requests.post(
+            f"{self.base_url}/embeddings",
+            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
+            json={"input": text, "model": self.model_query},
+            timeout=30,
+        )
+        resp.raise_for_status()
+        return resp.json()["data"][0]["embedding"]
+
+    # (선택) 문서 임베딩이 필요할 때 사용—지금은 build_index에서 직접 호출하므로 없어도 됨
+    def embed_documents(self, texts: List[str]):
+        import requests
+        resp = requests.post(
+            f"{self.base_url}/embeddings",
+            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
+            json={"input": texts, "model": self.model_query},
+            timeout=60,
+        )
+        resp.raise_for_status()
+        return [d["embedding"] for d in resp.json()["data"]]
+
 # 이 함수는 FAISS.load_local 또는 쿼리 임베딩 시 필요하므로 유지합니다.
-def get_embedding_model() -> OpenAIEmbeddings:
+def get_embedding_model() -> UpstageEmbeddingsMinimal:
     load_dotenv()
-    upstage_key = os.getenv("UPSTAGE_API_KEY")
-    openai_key = os.getenv("OPENAI_API_KEY")
-    api_key = upstage_key or openai_key
+    api_key = os.getenv("UPSTAGE_API_KEY") or os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("UPSTAGE_API_KEY 또는 OPENAI_API_KEY 중 하나는 반드시 설정해야 합니다.")
+    base_url = os.getenv("UPSTAGE_BASE_URL") or os.getenv("OPENAI_BASE_URL") or "https://api.upstage.ai/v1"
+    return UpstageEmbeddingsMinimal(api_key=api_key, base_url=base_url, model_query="solar-embedding-1-large-query")
 
-    base_url = os.getenv("UPSTAGE_BASE_URL") or os.getenv("OPENAI_BASE_URL")
-    if (not base_url) and upstage_key:
-        base_url = "https://api.upstage.ai/v1"
-
-    embed_model = (
-        os.getenv("UPSTAGE_EMBEDDING_MODEL")
-        or os.getenv("OPENAI_EMBEDDING_MODEL")
-        or "solar-embedding-1-large-passage"
-    )
-
-    return OpenAIEmbeddings(
-        api_key=api_key,
-        base_url=base_url,
-        model=embed_model,
-    )
-
-def build_or_load_faiss(index_dir: str) -> Tuple[Optional[FAISS], Optional[OpenAIEmbeddings]]:
+def build_or_load_faiss(index_dir: str):
     try:
         embeddings = get_embedding_model()
     except RuntimeError as e:
@@ -49,7 +66,6 @@ def build_or_load_faiss(index_dir: str) -> Tuple[Optional[FAISS], Optional[OpenA
 
     if os.path.exists(os.path.join(index_dir, "index.faiss")):
         try:
-            # allow_dangerous_deserialization=True 옵션이 필요합니다.
             store = FAISS.load_local(index_dir, embeddings, allow_dangerous_deserialization=True)
             return store, embeddings
         except Exception as e:
@@ -171,10 +187,10 @@ def build_index():
 
     # LangChain FAISS 객체로 최종 조립. 쿼리 임베딩을 위해 embed_query 함수를 전달합니다.
     # solar-embedding-1-large-query 모델을 사용하도록 새 임베딩 객체를 만듭니다.
-    query_embedder = OpenAIEmbeddings(
+    query_embedder = UpstageEmbeddingsMinimal(
         api_key=api_key,
-        base_url="https://api.upstage.ai/v1",
-        model="solar-embedding-1-large-query"
+        base_url=os.getenv("UPSTAGE_BASE_URL") or "https://api.upstage.ai/v1",
+        model_query="solar-embedding-1-large-query",
     )
 
     final_faiss_store = FAISS(query_embedder.embed_query, index, docstore, index_to_docstore_id)
