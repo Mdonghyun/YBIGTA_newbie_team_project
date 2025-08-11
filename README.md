@@ -7,7 +7,7 @@ YBIGTA TEAM 7
 
 ### 실행 방법 (로컬)
 
-1) Python 3.10+ 권장, 의존성 설치
+1) Python 3.12 권장, 의존성 설치
 
 ```bash
 pip install -r requirements.txt
@@ -26,6 +26,14 @@ set UPSTAGE_API_KEY=YOUR_KEY
 streamlit run streamlit_app.py
 ```
 
+### Demo
+- **Live URL**: [앱 실행하기](https://ybigtanewbieteamproject-hwggkvi5ue2rta7yp32qkg.streamlit.app/)
+
+![Demo Screenshot-chat](image-2.png)
+![Demo Screenshot-subject_info](image-3.png)
+![Demo Screenshot-rag_review_1](image-5.png)
+![Demo Screenshot-rag_review_2](image-6.png)
+
 ### 구조
 
 - `streamlit_app.py`: Streamlit UI 및 그래프 진입점
@@ -35,6 +43,29 @@ streamlit run streamlit_app.py
 - `st_app/graph/router.py`: LLM 기반 조건부 라우팅 및 그래프 정의
 - `st_app/db/subject_information/subjects.json`: 대상 기본 정보 샘플
 - `st_app/db/faiss_index/*`: FAISS 인덱스(샘플). 실제 서비스에서는 사전 구축본 업로드 필요
+
+### Graph State
+| Key          | 설명 |
+|--------------|------|
+| `user_input` | 사용자가 입력한 질문 |
+| `route`      | 현재 라우팅된 노드 (`chat`, `subject_info`, `rag_review`) |
+| `subject`    | 라우팅 시 추출된 주제 (없을 수 있음) |
+| `response`   | LLM 최종 응답 |
+| `citations`  | RAG 검색 시 반환된 근거 리스트 |
+| `last_node`  | 마지막으로 실행된 노드 |
+
+### 라우팅 규칙
+1. **subject_info**  
+   - '정보' + '주제' 키워드가 모두 포함된 경우
+2. **rag_review**  
+   - '리뷰' 또는 '후기' 키워드가 포함된 경우
+3. **chat**  
+   - 그 외 모든 경우 (기본값)
+
+### 전체 아키텍처
+![Architecture](image-7.png)
+
+---
 
 # about Team
 
