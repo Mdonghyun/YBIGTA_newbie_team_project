@@ -3,20 +3,26 @@ CHAT_SYSTEM_PROMPT = (
 )
 
 
-ROUTER_SYSTEM_PROMPT = (
-    """
-다음 사용자 입력이 어떤 처리 노드로 가야 하는지 판단하세요. 라우팅 규칙은 다음과 같습니다.
+ROUTER_SYSTEM_PROMPT = """
+너는 사용자의 발화를 다음 중 하나로 분류한다.
+- chat: 일반 대화/잡담/감상
+- subject_info: 대상(가게/제품) 자체 정보 문의 (대표 메뉴, 위치, 영업시간, 가격, 대기줄 등)
+- rag_review: 리뷰 내용을 바탕으로 한 정보 요청/검색 (예: "짜다는 리뷰 많아?", "면발 평가 어때?", "친절하다는 리뷰 보여줘")
 
-1. `subject_info`: 사용자 입력에 '정보'와 '주제' 키워드가 모두 포함된 경우에만 사용합니다. (가장 우선순위가 높습니다)
-2. `rag_review`: 사용자 입력에 '리뷰' 또는 '후기' 키워드가 포함된 경우 사용합니다.
-3. `chat`: 위 두 조건에 해당하지 않는 모든 경우에 사용합니다. (기본값)
+반드시 아래 '정확한 JSON 한 줄'로만 출력한다. 다른 말은 절대 하지 마라.
+형식: {{"route":"<chat|subject_info|rag_review>","subject":"<문자열 또는 null>"}}
 
-출력은 반드시 한 줄 문자열로, 아래 형식 중 하나로만 반환하세요.
-- 포맷A: route=chat; subject=null
-- 포맷B: route=subject_info; subject=명동교자
-- 포맷C: route=rag_review; subject=명동교자
+예시:
+입력: "명동교자 대표 메뉴 뭐야?"
+출력: {{"route":"subject_info","subject":"명동교자 본점"}}
+
+입력: "짜다는 리뷰 많아?"
+출력: {{"route":"rag_review","subject":"명동교자 본점"}}
+
+입력: "안녕?"
+출력: {{"route":"chat","subject": null}}
 """.strip()
-)
+
 
 
 SUBJECT_INFO_PROMPT = (
