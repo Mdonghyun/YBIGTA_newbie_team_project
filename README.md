@@ -1,6 +1,41 @@
 YBIGTA TEAM 7
 =============
 
+## Streamlit RAG + Agent LangGraph 데모
+
+이 레포에는 LangChain + LangGraph 기반의 간단한 RAG/Agent 챗봇 데모가 포함되어 있습니다.
+
+### 실행 방법 (로컬)
+
+1) Python 3.10+ 권장, 의존성 설치
+
+```bash
+pip install -r requirements.txt
+pip install streamlit langchain langgraph langchain-openai langchain-community faiss-cpu
+```
+
+2) 환경변수 설정 (Streamlit Cloud에서는 `st.secrets` 권장)
+
+```bash
+set UPSTAGE_API_KEY=YOUR_KEY
+```
+
+3) 실행
+
+```bash
+streamlit run streamlit_app.py
+```
+
+### 구조
+
+- `streamlit_app.py`: Streamlit UI 및 그래프 진입점
+- `st_app/utils/state.py`: 그래프 상태 정의
+- `st_app/rag/*`: LLM, 프롬프트, 임베딩/검색 구성
+- `st_app/graph/nodes/*`: Chat/SubjectInfo/RAGReview 노드
+- `st_app/graph/router.py`: LLM 기반 조건부 라우팅 및 그래프 정의
+- `st_app/db/subject_information/subjects.json`: 대상 기본 정보 샘플
+- `st_app/db/faiss_index/*`: FAISS 인덱스(샘플). 실제 서비스에서는 사전 구축본 업로드 필요
+
 # about Team
 
 팀 과제 7조입니다. 화이팅!
