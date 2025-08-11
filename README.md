@@ -29,10 +29,10 @@ streamlit run streamlit_app.py
 ### Demo
 - **Live URL**: [앱 실행하기](https://ybigtanewbieteamproject-hwggkvi5ue2rta7yp32qkg.streamlit.app/)
 
-![Demo Screenshot-chat](image-2.png)
-![Demo Screenshot-subject_info](image-3.png)
-![Demo Screenshot-rag_review_1](image-5.png)
-![Demo Screenshot-rag_review_2](image-6.png)
+![Demo-chat](assets/Demo-chat.png)
+![Demo-subject](assets/Demo-subject_info.png)
+![Demo-rag1](assets/Demo-rag_review_1.png)
+![Demo-rag2](assets/Demo-rag_review_2.png)
 
 ### 구조
 
@@ -63,7 +63,7 @@ streamlit run streamlit_app.py
    - 그 외 모든 경우 (기본값)
 
 ### 전체 아키텍처
-![Architecture](image-7.png)
+![Architecture](assets/Architecture.png)
 
 ---
 
